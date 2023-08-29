@@ -20,16 +20,20 @@ module.exports = (database) => {
         isUrl: true
       },
       height: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
       },
       weight:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
       },
       yearsOfLive:{
         type: DataTypes.INTEGER,
         allowNull: false
+      },
+      flag: {
+        type: DataTypes.STRING,
+        allowNull: true
       }
     }
   },{ timestamps: false });

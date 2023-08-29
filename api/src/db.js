@@ -31,12 +31,12 @@ database.models = Object.fromEntries(capsEntries);
 
 // En database.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Dog, Temperaments } = database.models;
+const { Dog, Temperament } = database.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-Dog.belongsToMany(Temperaments, { through: "relational_table", timestamps: false });
-Temperaments.belongsToMany(Dog, { through: "relational_table", timestamps: false });
+Dog.belongsToMany(Temperament, { through: "relational_table", timestamps: false });
+Temperament.belongsToMany(Dog, { through: "relational_table", timestamps: false });
 
 module.exports = {
   ...database.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
