@@ -27,7 +27,7 @@ module.exports = (database) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      yearsOfLive:{
+      lifeSpan:{
         type: DataTypes.INTEGER,
         allowNull: false
       },

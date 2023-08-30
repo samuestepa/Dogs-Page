@@ -12,6 +12,7 @@ const getDogs = async (req, res) => {
             height: dog.height,
             weight: dog.weight,
             lifeSpan: dog.life_span,
+            temperament: dog.temperament,
             flag: false
         }));
         if(!dogsApi.lenght === 0) throw new Error('Error fetching data from API');
