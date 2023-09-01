@@ -1,8 +1,6 @@
-const getDogs = require('../controllers/getAllDogs');
-const { getRazaApi, 
-        getRazaDb, 
-        getByNameApi, 
-        getByNameDb } = require('../controllers/getByRazaByName');
+const { getDogs, getByName } = require('../controllers/getAllDogs');
+const getDog = require('../controllers/getDog');
+
 
 const getDogsHandler = async (req, res) => {
     try {
@@ -13,46 +11,26 @@ const getDogsHandler = async (req, res) => {
     }
 };
 
-const getRazaApiHandler = async (req, res) => {
+const getDogByIdHandler = async (req, res) => {
     try {
-        const razaApiData = await getRazaApi();
-        res.status(200).json(razaApiData);
+        const dogById = await getDog(req, res);
+        return dogById;
     } catch (error) {
-        res.status(500).json({ error: 'Error while fetching raza data from API' });
+        res.status(500).json({ error: 'Error while fetching dog by id' });
     }
 };
 
-const getRazaDbHandler = async (req, res) => {
+const getDogByNameHandler = async (req, res) => {
     try {
-        const razaDbData = await getRazaDb();
-        res.status(200).json(razaDbData);
+        const dogByName = await getByName(req, res);
+        res.status(200).json(dogByName);
     } catch (error) {
-        res.status(500).json({ error: 'Error while fetching raza data from DB' });
-    }
-};
-
-const getByNameApiHandler = async (req, res) => {
-    try {
-        const byNameApiData = await getByNameApi();
-        res.status(200).json(byNameApiData);
-    } catch (error) {
-        res.status(500).json({ error: 'Error while fetching data by name from API' });
-    }
-};
-
-const getByNameDbHandler = async (req, res) => {
-    try {
-        const byNameDbData = await getByNameDb();
-        res.status(200).json(byNameDbData);
-    } catch (error) {
-        res.status(500).json({ error: 'Error while fetching data by name from DB' });
+        res.status(500).json({ error: 'Error while fetching dog by name' });
     }
 };
 
 module.exports = {
         getDogsHandler,
-        getRazaApiHandler, 
-        getRazaDbHandler, 
-        getByNameApiHandler, 
-        getByNameDbHandler
+        getDogByNameHandler,
+        getDogByIdHandler
 };

@@ -1,24 +1,31 @@
 const { Dog, Temperament } = require('../db');
 const { getDogs } = require('./getAllDogs')
 
-const postDog = async(req, res) => {
-    const { id, name, image, height, weight, lifeSpan, temperament } = req.body;
-    if(!id || 
-        !name || 
-        !image || 
-        !height || 
-        !weight || 
-        !lifeSpan || 
-        !temperament) throw new Error('Incomplete Data');
+const postDog = async (req, res) => {
     try {
+        const { name, image, height, weight, lifeSpan, temperament } = req.body;
+
+        if (!name || !image || !height || !weight || !lifeSpan || !temperament) {
+            return res.status(400).json({ error: "Incomplete data" });
+        }
+
         const dogs = await getDogs();
-        const searchDog = dogs.find(dog => dog.name === name);
-        if(searchDog) throw new Error('A dog with the same name already exists');
-        
-        const temperaments = await Temperament.findAll();
-        const temperamentExists = temperaments.some(temp => temp.name === temperament);
-        if (!temperamentExists) throw new Error('The specified temperament does not exist');
-        
+        const dogExist = dogs.find(d => d.name === name);
+
+        if (dogExist) {
+            return res.status(400).json({ error: "Dog breed name already exists" });
+        }
+
+        let tempExist = await Temperament.findOne({
+            where: { name: temperament }
+        });
+
+        if (!tempExist) {
+            // Si el temperamento no existe, créalo en la base de datos
+            tempExist = await Temperament.create({ name: temperament });
+        }
+
+        // Crea el perro en la base de datos
         const newDog = await Dog.create({
             name,
             image,
@@ -27,12 +34,14 @@ const postDog = async(req, res) => {
             lifeSpan
         });
 
-        await newDog.setTemperament(temperament);
+        // Asocia el temperamento al perro creado
+        await newDog.addTemperament(tempExist);
 
-        res.status(200).json({ message: 'Dog created successfully' });
+        return res.status(201).json('El perro ha sido creado');
     } catch (error) {
-        res.status(404).json(error.message)
+        return res.status(500).json({ error: error.message });
     }
 };
+
 
 module.exports = postDog;

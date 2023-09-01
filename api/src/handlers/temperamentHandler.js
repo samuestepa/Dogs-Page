@@ -1,6 +1,6 @@
 const getTemperaments = require('../controllers/getAllTemperaments');
 
-const getTemperamentHandler = async() => {
+const getTemperamentHandler = async(req, res) => {
     try {
         const temperament = await getTemperaments();
         res.status(200).json(temperament);

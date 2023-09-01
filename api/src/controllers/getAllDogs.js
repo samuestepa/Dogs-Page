@@ -1,31 +1,33 @@
-const axios = require('axios');
-const { Dog } = require('../db.js');
-const URL = 'https://api.thedogapi.com/v1/breeds';
+const dogsApi = require('./dogsApi');
+const dogsDb = require('./dogsDb');
 
 const getDogs = async (req, res) => {
     try {
-        const response = await axios.get(URL);
-        const dogsApi = response.data.map((dog) => ({
-            id: dog.id,
-            image: dog.reference_image_id,
-            name: dog.name,
-            height: dog.height,
-            weight: dog.weight,
-            lifeSpan: dog.life_span,
-            temperament: dog.temperament,
-            flag: false
-        }));
-        if(!dogsApi.lenght === 0) throw new Error('Error fetching data from API');
+        const dogsFromApi = await dogsApi();
+        const dogsFromDb = await dogsDb()
+        const dogs = [...dogsFromApi, ...dogsFromDb];
 
-        const dogsDb = await Dog.findAll();
-        if(!dogsDb.lenght === 0) throw new Error('Error fetching data from DB');
-
-        const dogs = [...dogsApi, ...dogsDb];
-
-        res.status(200).json(dogs);
+        return dogs;
     } catch (error) {
         res.status(404).json(error.message);
     }
 };
 
-module.exports = getDogs;
+const getByName = async (req, res) => {
+    try {
+        const { name } = req.params
+        const dogs = await getDogs();
+
+        const result = await dogs.find(d => d.name === name);
+        if(!result) throw new Error('No found dog name');
+
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(404).json(error.message);
+    }
+}; 
+
+module.exports = {
+    getDogs,
+    getByName
+};

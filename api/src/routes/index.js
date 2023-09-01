@@ -1,21 +1,16 @@
 const { Router } = require('express');
 const {
         getDogsHandler,
-        getRazaApiHandler, 
-        getRazaDbHandler, 
-        getByNameApiHandler, 
-        getByNameDbHandler
+        getDogByNameHandler,
+        getDogByIdHandler
 } = require('../handlers/dogHandler');
 const getTemperamentHandler = require('../handlers/temperamentHandler');
 const postDog = require('../controllers/postDog');
-
 const router = Router();
 
-router.get('/', getDogsHandler);
-router.get('/:idRazaApi', getRazaApiHandler);
-router.get('/:idRazaDb', getRazaDbHandler);
-router.get('/nameApi', getByNameApiHandler);
-router.get('/nameDb', getByNameDbHandler);
+router.get('/dogs', getDogsHandler);
+router.get('/dogs/:id', getDogByIdHandler);
+router.get('/dogs/name/:name', getDogByNameHandler);
 router.get('/temperaments', getTemperamentHandler);
 router.post('/create', postDog);
 

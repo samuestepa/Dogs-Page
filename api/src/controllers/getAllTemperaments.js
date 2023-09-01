@@ -1,33 +1,28 @@
-const axios = require('axios');
 const { Temperament } = require('../db');
-const URL = 'https://api.thedogapi.com/v1/breeds';
+const { getDogs } = require('./getAllDogs');
 
-const getTemperaments = async() => {
+const getTemperaments = async(req, res) => {
     try {
-        const response = await axios.get(URL);
-        const dogsApi = response.data;
+        const dogsApi = await getDogs();
 
-        for (const dog of dogsApi) {
-            if (dog.temperament) {
-                const temperaments = dog.temperament.split(', ').filter(Boolean);
-                for (const temp of temperaments) {
-                    await Temperament.findOrCreate({
-                        where: { name: temp },
-                        defaults: { name: temp }
-                    });
-                }
-            }
+        const temperamentsApi = dogsApi
+            .map((dog) => dog.temperament) // Obtén la lista de temperamentos de los perros
+            .filter((temperament) => !!temperament) // Filtra los temperamentos que no están definidos
+            .flatMap((temperament) => temperament.split(', ')) // Separa los temperamentos por comas y crea un array plano
+            .map((temperament) => temperament.trim()) // Quita espacios en blanco
+            .filter((temperament) => temperament.length > 2); // Filtra los temperamentos con más de 2 caracteres
+
+        const uniqueTemperaments = [...new Set(temperamentsApi)]; // Elimina duplicados
+
+        for (const temperament of uniqueTemperaments) {
+            await Temperament.findOrCreate({
+                where: { name: temperament }
+            });
         }
 
-        const temperamentsDb = await Temperament.findAll({
-            attributes: ['name'],
-            raw: true,
-            group: ['name']
-        });
-
-        temperamentsDb.map(t => t.name);
-        
-        res.status(200).json(temperamentsDb);
+        const temp = await Temperament.findAll();
+        const totalTemp = temp.map((t) => t.name).sort();
+        return totalTemp;
     } catch (error) {
         res.status(404).json({ error: 'Error fetching temperaments', message: error.message });
     }

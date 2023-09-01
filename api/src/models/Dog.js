@@ -4,9 +4,10 @@ module.exports = (database) => {
 
   database.define('dog', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -18,23 +19,25 @@ module.exports = (database) => {
       allowNull: false,
       validate: {
         isUrl: true
-      },
-      height: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      weight:{
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      lifeSpan:{
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      flag: {
-        type: DataTypes.STRING,
-        allowNull: true
       }
+    },
+    height: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    weight: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lifeSpan: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    flag: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
-  },{ timestamps: false });
+  }, { timestamps: false });
 };
+
