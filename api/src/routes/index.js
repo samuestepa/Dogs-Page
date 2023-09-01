@@ -6,6 +6,7 @@ const {
 } = require('../handlers/dogHandler');
 const getTemperamentHandler = require('../handlers/temperamentHandler');
 const postDog = require('../controllers/postDog');
+
 const router = Router();
 
 router.get('/dogs', getDogsHandler);

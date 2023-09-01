@@ -15,10 +15,12 @@ const getDogs = async (req, res) => {
 
 const getByName = async (req, res) => {
     try {
-        const { name } = req.params
+        const { name } = req.params;
         const dogs = await getDogs();
 
-        const result = await dogs.find(d => d.name === name);
+        const result = dogs.filter(d => d.name
+            .toLowerCase() //convertimos en minuscula
+            .startsWith(name.toLowerCase())); //para decir desde donde inicia a hacer la comparación
         if(!result) throw new Error('No found dog name');
 
         res.status(200).json(result);
