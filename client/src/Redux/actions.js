@@ -56,7 +56,7 @@ export const getTemperaments = () => {
     return async function (dispatch) {
         try {
             dispatch(setLoading(true));
-            const response = await axios(URL + "/temperaments");
+            const response = await axios("http://localhost:3001/temperaments");
             const temperaments = response.data;
 
             dispatch({
