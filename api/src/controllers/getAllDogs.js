@@ -4,7 +4,7 @@ const dogsDb = require('./dogsDb');
 const getDogs = async (req, res) => {
     try {
         const dogsFromApi = await dogsApi();
-        const dogsFromDb = await dogsDb()
+        const dogsFromDb = await dogsDb();
         const dogs = [...dogsFromApi, ...dogsFromDb];
 
         return dogs;

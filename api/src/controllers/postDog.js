@@ -16,7 +16,7 @@ const postDog = async (req, res) => {
             return res.status(400).json({ error: "Dog breed name already exists" });
         }
 
-        let tempExist = await Temperament.findOne({
+        let tempExist = await Temperament.findOne({ //Busca en Temperament un campo name que coincida con el valor de temperament
             where: { name: temperament }
         });
 

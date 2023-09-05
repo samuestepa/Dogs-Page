@@ -15,13 +15,13 @@ const getTemperaments = async(req, res) => {
         const uniqueTemperaments = [...new Set(temperamentsApi)]; // Elimina duplicados
 
         for (const temperament of uniqueTemperaments) {
-            await Temperament.findOrCreate({
+            await Temperament.findOrCreate({ //método de sequelize
                 where: { name: temperament }
             });
         }
 
         const temp = await Temperament.findAll();
-        const totalTemp = temp.map((t) => t.name).sort();
+        const totalTemp = temp.map((t) => t.name).sort(); // metodo para ordenar de A a Z
         return totalTemp;
     } catch (error) {
         res.status(404).json({ error: 'Error fetching temperaments', message: error.message });
