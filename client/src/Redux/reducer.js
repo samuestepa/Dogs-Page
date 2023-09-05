@@ -1,6 +1,7 @@
 import {
     GET_DOGS,
     SEARCH_DOGS_BY_NAME,
+    SEARCH_DOGS_BY_ID,
     GET_TEMPERAMENTS,
     FILTER_BY_TEMPERAMENT,
     FILTER_BY_ORIGIN,
@@ -11,7 +12,7 @@ import {
     SET_CLEAN,
     UPDATE_ORDER,
     CLEAN_FILTER
-} from "./actionTypes";
+} from './actionTypes.js'
 
 const initialState = {
     allDogs: [],
@@ -39,6 +40,12 @@ export default function rootReducer(state = initialState, { type, payload }) {
                 ...state,
                 filteredData: payload
             };
+        case SEARCH_DOGS_BY_ID: //Actualiza resultados de la busqueda
+            return {
+                ...state,
+                filteredData: payload
+            };
+
         case GET_TEMPERAMENTS: //Actualiza todos los temperamentos
             return {
                 ...state,
@@ -81,9 +88,9 @@ export default function rootReducer(state = initialState, { type, payload }) {
             }
             if (filterOrigin === 'db') {
                 filteredDogsData = state.allDogs.filter((dog) => dog.flag === true);
-            } 
+            }
             alert('No Found Data');
-            
+
             return {
                 ...state,
                 currentPage: 1,
@@ -138,6 +145,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
                 ...state,
                 filteredData: state.allDogs,
                 sortOrder: "asc",
+                totalPages: Math.ceil(state.allDogs.length / 8)
             };
         default:
             return {

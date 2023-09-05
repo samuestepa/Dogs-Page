@@ -2,6 +2,7 @@ import axios from 'axios';
 import { 
     GET_DOGS,
     SEARCH_DOGS_BY_NAME,
+    SEARCH_DOGS_BY_ID,
     GET_TEMPERAMENTS,
     FILTER_BY_TEMPERAMENT,
     FILTER_BY_ORIGIN,
@@ -12,13 +13,13 @@ import {
     SET_LOADING,
     SET_CLEAN,
     UPDATE_ORDER,
-    CLEAN_FILTER } from "./actionTypes";
+    CLEAN_FILTER } from './actionTypes';
 
 const URL = "http://localhost:3001/dogs";
 
 export const getDogs = () => {
     return async function (dispatch) {
-        const response = axios.get(URL);
+        const response = await axios.get(URL);
         const dogs = response.data;
 
         dispatch({
@@ -34,7 +35,7 @@ export const searchDogsByName = (name) => {
     return async function (dispatch) {
         try {
             dispatch(setLoading(true));
-            const response = axios.get(URL + `/name/${name}`);
+            const response = await axios.get(URL + `/name/${name}`);
             const dogByName = response.data;
     
             dispatch({
@@ -46,6 +47,28 @@ export const searchDogsByName = (name) => {
         } catch (error) {
             if(error.response.status === 404)
             return alert('No dog breeds found with that name')
+        } finally {
+            dispatch(setLoading(false))
+        }
+    }
+};
+
+export const searchDogsById = (id) => {
+    return async function (dispatch) {
+        try {
+            dispatch(setLoading(true));
+            const response = await axios.get(URL + `/${id}`);
+            const dogById = response.data;
+    
+            dispatch({
+                type: SEARCH_DOGS_BY_ID,
+                payload: dogById
+            });
+            dispatch(setTotalPage());   
+
+        } catch (error) {
+            if(error.response.status === 404)
+            return alert(`No dog breeds found with id ${id}`)
         } finally {
             dispatch(setLoading(false))
         }
@@ -89,7 +112,7 @@ export const filterByOrigin = (option) => {
         })
     }
 };
-// define ordenamiento
+// Define ordenamiento
 export const order = () => ({
     type: ORDER
 });
@@ -97,7 +120,7 @@ export const order = () => ({
 export const createDog = (payload) => {
     return async function (dispatch) {
         try {
-            const service = await axios.post(URL, payload)
+            const service = await axios.post('http://localhost:3001/create', payload)
 
             dispatch({
                 type: CREATE_DOG,
@@ -105,6 +128,7 @@ export const createDog = (payload) => {
             });
 
             if (service.status === 201) {
+                dispatch(getDogs());
                 return alert('Succesfully created')
             }
         } catch (error) {
@@ -118,26 +142,26 @@ export const createDog = (payload) => {
     }
 };
 
-// Acción para traer definir página actual
+// Definir página actual
 export const setPage = (pageNumber) => ({
     type: SET_PAGE,
     payload: pageNumber,
 });
 
-// Acción para traer definir el total de páginas
+// Definir el total de páginas
 export const setTotalPage = () => {
     return {
         type: SET_TOTAL_PAGE
     }
 };
 
-// Acción para actualizar estado de carga
+// Actualiza estado de carga
 export const setLoading = (isLoading) => ({
     type: SET_LOADING,
     payload: isLoading,
 });
 
-// Acción para actualizar estado de limpieza
+// Actualiza estado de limpieza
 export function setClean(isClean) {
     return {
         type: SET_CLEAN,
@@ -145,13 +169,13 @@ export function setClean(isClean) {
     }
 };
 
-// Acción para actualizar ordenamiento
-export const updateSortedList = (sortedList) => ({
+// Actualiza ordenamiento
+export const updateOrder = (sortedList) => ({
     type: UPDATE_ORDER,
     payload: sortedList,
 });
 
-// Acción para limpiar filtros
+// Limpiar filtros
 export function cleanFilter() {
     return async function (dispatch) {
         try {            

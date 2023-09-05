@@ -7,8 +7,8 @@ const dogsApi = async (req, res) => {
             id: dog.id,
             image: dog.reference_image_id,
             name: dog.name,
-            height: dog.height,
-            weight: dog.weight,
+            height: dog.height.metric,
+            weight: dog.weight.metric,
             lifeSpan: dog.life_span,
             temperament: dog.temperament,
             flag: false

@@ -1,7 +1,25 @@
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from "react-redux";
+import { getDogs } from '../../redux/actions';
+import Cards from '../../components/Cards/Cards'
+import Nav from '../../components/Nav/Nav';
+import Paginator from '../../components/Paginator/Paginator'; 
+
 const Home = () => {
-    return(
+    const dispatch = useDispatch();
+    const dogs = useSelector((state) => state.filteredData);
+
+    useEffect(() => {
+        dispatch(getDogs());
+    }, [dispatch])
+
+    return (
         <div>
-            <h1>Esta es la vista Home</h1>
+            <Nav />
+            <Cards dogs={dogs} />
+            {Array.isArray(dogs) && dogs.length > 0 ? (
+                <Paginator />
+            ) : (<h1>Dogs not found</h1>)}
         </div>
     )
 };
