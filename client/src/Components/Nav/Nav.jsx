@@ -4,7 +4,7 @@ import { getTemperaments } from '../../redux/actions';
 import { useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import style from './Nav.module.css';
-import SearchBar from '../../components/SearchBar/SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 import Origin from '../Origin/Origin';
 import Temperament from '../Temperament/Temperament';
 import Sort from '../Sort/Sort';

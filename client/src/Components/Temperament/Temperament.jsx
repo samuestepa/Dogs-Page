@@ -13,14 +13,12 @@ const Temperament = () => {
 
         useEffect(() => {
         if (clean) {
-            setSelectedTemperament("all"); // Escucha el estado global, y si es verdadero actaliza el estado local
+            setSelectedTemperament("all"); // Escucha el estado global, y si es verdadero actualiza el estado local
         }
     }, [clean]);
-    console.log(clean)
-    console.log(selectedTemperament)
 
-    const handleOptionSelect = (e) => {
-        const option = e.target.value;
+    const handleOptionSelect = (event) => {
+        const option = event.target.value;
         setSelectedTemperament(option); // Actualizar el estado con la opción seleccionada
         dispatch(filterByTemperament(option)); // Enviar la opción seleccionada a la acción
     };
@@ -31,8 +29,8 @@ const Temperament = () => {
                 onChange={handleOptionSelect}>
                 <option value="all">All</option>
                 {temperaments.map((temperament) => (
-                    <option key={temperament.id} value={temperament.name}>
-                        {temperament.name}
+                    <option key={temperament} value={temperament}>
+                    {temperament}
                     </option>
                 ))}
             </select>}

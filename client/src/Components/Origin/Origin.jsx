@@ -15,8 +15,8 @@ const Origin = () => {
         }
     }, [clean]);
 
-    const handleOptionSelect = (e) => {
-        const option = e.target.value;
+    const handleOptionSelect = (event) => {
+        const option = event.target.value;
         setSelectedOrigin(option); // Actualizar el estado con la opción seleccionada
         dispatch(filterByOrigin(option)); // Enviar la opción seleccionada a la acción
     };

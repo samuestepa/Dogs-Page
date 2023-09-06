@@ -65,6 +65,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
             filteredDogsData = state.allDogs.filter((dog) =>
                 dog.temperament && dog.temperament.includes(filterTemperament)
             );
+            console.log(filteredDogsData);
             return {
                 ...state,
                 currentPage: 1,
@@ -94,8 +95,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
             return {
                 ...state,
                 currentPage: 1,
-                filteredData: filteredDogsData,
-                //sortOrder: "asc"
+                filteredData: filteredDogsData
             };
         };
         case ORDER: { //Define orden

@@ -4,7 +4,9 @@ import style from './Form.module.css';
 
 const Form = () => {
     return (
-        <div></div>
+        <div>
+            <h1>Vista Form</h1>
+        </div>
     )
 };
 

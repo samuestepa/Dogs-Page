@@ -9,7 +9,7 @@ const Card = ({ dog }) => {
             <Link to={`/detail/${id}`} className={style.link}>
                 <h1>{name}</h1>
                 <p>{temperament}</p>
-                <p>{weight} </p>
+                <p>{weight} Kg</p>
                 <img src={`https://cdn2.thedogapi.com/images/${image}.jpg`} alt='A dog' />            
             </Link>
         </div>
