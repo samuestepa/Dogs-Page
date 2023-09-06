@@ -120,7 +120,7 @@ export const order = () => ({
 export const createDog = (payload) => {
     return async function (dispatch) {
         try {
-            const service = await axios.post('http://localhost:3001/create', payload)
+            const service = await axios.post(URL, payload)
 
             dispatch({
                 type: CREATE_DOG,

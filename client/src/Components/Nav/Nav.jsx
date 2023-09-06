@@ -20,7 +20,7 @@ const Nav = () => {
             <Link to={`/`} >
                 <button>🡰</button>
             </Link>
-            <Link to={`/create`}>
+            <Link to={`/form`}>
                 <button>Create</button>
             </Link>
             <Sort />
