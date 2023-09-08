@@ -18,7 +18,7 @@ const Form = () => {
         weightMin: '',
         weightMax: '',
         lifeSpan: '',
-        temperaments: []
+        temperament: []
     });
     const [formTouched, setFormTouched] = useState(false);
 
@@ -38,8 +38,8 @@ const Form = () => {
     //Agregar o quitar temperamentos seleccionados en el dropdown
     const handleTemperamentChange = (event) => {
         const selectValue = event.target.value;
-        if(!formData.temperaments.includes(selectValue))
-        setFormData((data) => ({...data, temperaments: [...data.temperaments, selectValue]}));
+        if(!formData.temperament.includes(selectValue))
+        setFormData((data) => ({...data, temperament: [...data.temperament, selectValue]}));
     };
 
     //Identificar temperamentos seleccionados
@@ -50,7 +50,7 @@ const Form = () => {
     //Remover elementos seleccionados
     const handleRemoveTemperament = (id) => {
         setFormData((data) => ({
-            ...data, temperaments: data.temperaments.filter((temperamentId) => temperamentId !== id)
+            ...data, temperament: data.temperament.filter((temperamentId) => temperamentId !== id)
         }))
     };
 
@@ -68,7 +68,7 @@ const Form = () => {
                 weightMin: '',
                 weightMax: '',
                 lifeSpan: '',
-                temperaments: []
+                temperament: []
             });
             const validationErrors = validations(formData);
             setError(validationErrors);
@@ -80,7 +80,7 @@ const Form = () => {
                 height: `${formData.heightMin} - ${formData.heightMax}`,
                 weight: `${formData.weightMin} - ${formData.weightMax}`,
                 life_span: `${formData.lifeSpan} years`,
-                temperaments: formData.temperaments,
+                temperaments: formData.temperament,
             }
             console.log(payload)
             dispatch(createDog(payload))
@@ -140,7 +140,7 @@ const Form = () => {
                 <label>
                     Temperaments:
                     <div onClick={handleSelectTemperament}>
-                        <select id="temperamentsDropdown" multiple value={formData.temperaments} onChange={handleTemperamentChange}>
+                        <select id="temperamentsDropdown" multiple value={formData.temperament} onChange={handleTemperamentChange}>
                             {temperaments.map((temperament) => (
                                 <option key={temperament} value={temperament}>
                                     {temperament}
@@ -148,7 +148,7 @@ const Form = () => {
                             ))}
                         </select>
                         <div className={style['selected-values']}>
-                            {formData.temperaments.map((selectedId) => {
+                            {formData.temperament.map((selectedId) => {
                                 const selectedTemperament = temperaments.find((temperament) => temperament.id === selectedId);
                                 return (
                                     <div key={selectedId} className={style['selected-temperament']}>
@@ -161,7 +161,7 @@ const Form = () => {
                             })}
                         </div>
                     </div>
-                    <span>{error?.temperaments && error.temperaments}</span>
+                    <span>{error?.temperament && error.temperament}</span>
                 </label>
                 <br />
                 {!isSubmitDisabled ? (
