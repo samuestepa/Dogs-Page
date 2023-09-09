@@ -48,9 +48,9 @@ const Form = () => {
     };
 
     //Remover elementos seleccionados
-    const handleRemoveTemperament = (id) => {
+    const handleRemoveTemperament = (t) => {
         setFormData((data) => ({
-            ...data, temperament: data.temperament.filter((temperamentId) => temperamentId !== id)
+            ...data, temperament: data.temperament.filter((temperament) => temperament !== t)
         }))
     };
 
@@ -80,7 +80,7 @@ const Form = () => {
                 height: `${formData.heightMin} - ${formData.heightMax}`,
                 weight: `${formData.weightMin} - ${formData.weightMax}`,
                 life_span: `${formData.lifeSpan} years`,
-                temperaments: formData.temperament,
+                temperament: formData.temperament,
             }
             console.log(payload)
             dispatch(createDog(payload))
@@ -148,12 +148,12 @@ const Form = () => {
                             ))}
                         </select>
                         <div className={style['selected-values']}>
-                            {formData.temperament.map((selectedId) => {
-                                const selectedTemperament = temperaments.find((temperament) => temperament.id === selectedId);
+                            {formData.temperament.map((t) => {
+                                const selectedTemperament = temperaments.find((temperament) => temperament === t);
                                 return (
-                                    <div key={selectedId} className={style['selected-temperament']}>
-                                        {selectedTemperament.name}{' '}
-                                        <button type="button" onClick={() => handleRemoveTemperament(selectedId)}>
+                                    <div key={t} className={style['selected-temperament']}>
+                                        {selectedTemperament}{' '}
+                                        <button type="button" onClick={() => handleRemoveTemperament(t)}>
                                             ✖
                                         </button>
                                     </div>
