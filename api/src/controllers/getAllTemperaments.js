@@ -21,7 +21,7 @@ const getTemperaments = async(req, res) => {
         }
 
         const temp = await Temperament.findAll();
-        const totalTemp = temp.map((t) => t.name).sort(); // metodo para ordenar de A a Z
+        const totalTemp = temp.sort((a, b) => a.name.localeCompare(b.name)); // metodo para ordenar de A a Z
         return totalTemp;
     } catch (error) {
         res.status(404).json({ error: 'Error fetching temperaments', message: error.message });

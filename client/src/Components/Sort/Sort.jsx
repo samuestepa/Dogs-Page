@@ -20,11 +20,8 @@ function Sort({ sortOrder, order, filteredData }) {
 
     return (
         <div>
-            <label>Ascending <input
-                    type="checkbox"
-                    checked={sortOrder === 'asc'}
-                    onChange={handleToggleSort}
-                />
+            <label>Ascending 
+                <input type="checkbox" checked={sortOrder === 'asc'} onChange={handleToggleSort}/>
             </label>
         </div>
     )

@@ -89,8 +89,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
             }
             if (filterOrigin === 'db') {
                 filteredDogsData = state.allDogs.filter((dog) => dog.flag === true);
-            }
-            alert('No Found Data');
+            };
 
             return {
                 ...state,

@@ -29,8 +29,8 @@ const Temperament = () => {
                 onChange={handleOptionSelect}>
                 <option value="all">All</option>
                 {temperaments.map((temperament) => (
-                    <option key={temperament} value={temperament}>
-                    {temperament}
+                    <option key={temperament.name} value={temperament.name}>
+                    {temperament.name}
                     </option>
                 ))}
             </select>}

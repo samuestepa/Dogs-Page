@@ -31,26 +31,26 @@ const Form = () => {
         const { name, value } = event.target;
         const validationErrors = validations({...formData, [name]: value});
         setError(validationErrors);
-        setFormData((data) => ({...data, [name]: value}));
+        setFormData((prevFormData) => ({...prevFormData, [name]: value}));
         setFormTouched(true);
     };
-
+console.log(formData);
     //Agregar o quitar temperamentos seleccionados en el dropdown
     const handleTemperamentChange = (event) => {
         const selectValue = event.target.value;
         if(!formData.temperament.includes(selectValue))
-        setFormData((data) => ({...data, temperament: [...data.temperament, selectValue]}));
+        setFormData((prevFormData) => ({...prevFormData, temperament: [...prevFormData.temperament, selectValue]}));
     };
 
     //Identificar temperamentos seleccionados
     const handleSelectTemperament = () => {
-        return document.getElementById('selectTemperaments')
+        const dropDown = document.getElementById('temperamentsDropdown');
     };
 
     //Remover elementos seleccionados
-    const handleRemoveTemperament = (t) => {
-        setFormData((data) => ({
-            ...data, temperament: data.temperament.filter((temperament) => temperament !== t)
+    const handleRemoveTemperament = (selectedValue) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData, temperament: prevFormData.temperament.filter((temperament) => temperament !== selectedValue)
         }))
     };
 
@@ -91,7 +91,7 @@ const Form = () => {
     };
 
     const isSubmitDisabled = Object.keys(error).length > 0 || !formTouched;
-
+console.log(error);
     return (
         <div>
         <div className={style.bar}>
@@ -142,18 +142,18 @@ const Form = () => {
                     <div onClick={handleSelectTemperament}>
                         <select id="temperamentsDropdown" multiple value={formData.temperament} onChange={handleTemperamentChange}>
                             {temperaments.map((temperament) => (
-                                <option key={temperament} value={temperament}>
-                                    {temperament}
+                                <option key={temperament.id} value={temperament.id}>
+                                    {temperament.name}
                                 </option>
                             ))}
                         </select>
                         <div className={style['selected-values']}>
-                            {formData.temperament.map((t) => {
-                                const selectedTemperament = temperaments.find((temperament) => temperament === t);
+                            {formData.temperament.map((selectedValue) => {
+                                const selectedTemperament = temperaments.find((temperament) => temperament.id === selectedValue);
                                 return (
-                                    <div key={t} className={style['selected-temperament']}>
+                                    <div key={selectedValue} className={style['selected-temperament']}>
                                         {selectedTemperament}{' '}
-                                        <button type="button" onClick={() => handleRemoveTemperament(t)}>
+                                        <button type="button" onClick={() => handleRemoveTemperament(selectedValue)}>
                                             ✖
                                         </button>
                                     </div>
