@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDogs } from '../../redux/actions';
 import Cards from '../../components/Cards/Cards'
 import Nav from '../../components/Nav/Nav';
-import Paginator from '../../components/Paginator/Paginator'; 
+import Paginator from '../../components/Paginator/Paginator';
 
 const Home = () => {
     const dispatch = useDispatch();

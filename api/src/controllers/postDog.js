@@ -16,7 +16,7 @@ const postDog = async (req, res) => {
             return res.status(400).json({ error: "Dog breed name already exists" });
         }
 
-        let tempExist = await Temperament.findOne({ //Busca en Temperament un campo name que coincida con el valor de temperament
+        /* let tempExist = await Temperament.findOne({ //Busca en Temperament un campo name que coincida con el valor de temperament
             where: { name: temperament }
         });
 
@@ -24,6 +24,14 @@ const postDog = async (req, res) => {
             // Si el temperamento no existe, créalo en la base de datos
             tempExist = await Temperament.create({ name: temperament });
         }
+ */
+        const tempExist = await Promise.all(
+            temperament.map((temperamentId) =>
+                Temperament.findByPk(temperamentId)));
+
+        // Valida que el temperamento exista
+        if (tempExist.some((t) => !t))
+            return res.status(404).json({ error: "Temperament does not exist" });
 
         // Crea el perro en la base de datos
         const newDog = await Dog.create({
@@ -37,9 +45,9 @@ const postDog = async (req, res) => {
         // Asocia el temperamento al perro creado
         await newDog.addTemperament(tempExist);
 
-        return res.status(201).json('El perro ha sido creado');
+       res.status(201).json('Create Successful');
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
 

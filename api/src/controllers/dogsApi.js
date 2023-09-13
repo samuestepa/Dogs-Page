@@ -1,11 +1,16 @@
 const axios = require('axios');
+require('dotenv').config();
+const { API_KEY } = process.env;
 
 const dogsApi = async (req, res) => {
+    const options = {
+        headers: { "x-api-key": API_KEY },
+    };
     try {
-        const dogsApi = await axios.get('https://api.thedogapi.com/v1/breeds');
+        const dogsApi = await axios.get('https://api.thedogapi.com/v1/breeds', (options));
         const results = dogsApi.data.map((dog) => ({
             id: dog.id,
-            image: dog.reference_image_id,
+            image: dog.image.url,
             name: dog.name,
             height: dog.height.metric,
             weight: dog.weight.metric,

@@ -7,10 +7,10 @@ const Card = ({ dog }) => {
     return (
         <div className={style.card}>
             <Link to={`/detail/${id}`} className={style.link}>
+                <img src={image} alt='A dog' />            
                 <h1>{name}</h1>
                 <p>{temperament}</p>
                 <p>{weight} Kg</p>
-                <img src={`https://cdn2.thedogapi.com/images/${image}.jpg`} alt='A dog' />            
             </Link>
         </div>
     )

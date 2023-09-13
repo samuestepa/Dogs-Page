@@ -120,7 +120,7 @@ export const order = () => ({
 export const createDog = (payload) => {
     return async function (dispatch) {
         try {
-            const service = await axios.post(URL, payload)
+            const service = await axios.post('http://localhost:3001/create', payload)
 
             dispatch({
                 type: CREATE_DOG,
@@ -129,7 +129,7 @@ export const createDog = (payload) => {
 
             if (service.status === 201) {
                 dispatch(getDogs());
-                return alert('Succesfully created')
+                return alert('Create Successful')
             }
         } catch (error) {
             if (error.response.status === 400) {

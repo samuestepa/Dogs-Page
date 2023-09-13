@@ -16,14 +16,14 @@ const getDogByIdHandler = async (req, res) => {
         const dogById = await getDog(req, res);
         return dogById;
     } catch (error) {
-        res.status(500).json({ error: 'Error while fetching dog by id' });
+        res.status(500).json(error.message);
     }
 };
 
 const getDogByNameHandler = async (req, res) => {
     try {
         const dogByName = await getByName(req, res);
-        res.status(200).json(dogByName);
+        return dogByName;
     } catch (error) {
         res.status(500).json({ error: 'Error while fetching dog by name' });
     }

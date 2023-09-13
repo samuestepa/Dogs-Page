@@ -24,8 +24,7 @@ const Detail = () => {
             </div>
             <div className={styles.detailContent}>
                 <div className={styles.imageDetail}>
-                    
-                    <img src={`https://cdn2.thedogapi.com/images/${dog.image}.jpg`} alt={dog.name} className={styles.imageDog} />
+                    <img src={dog.image} alt={dog.name} className={styles.imageDog} /> 
                 </div>
                 <div className={styles.box}>
                     <h1 className={styles.titleDog}>{dog.name}</h1>
