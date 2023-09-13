@@ -141,17 +141,17 @@ console.log(error);
                     Temperaments:
                     <div onClick={handleSelectTemperament}>
                         <select id="temperamentsDropdown" multiple value={formData.temperament} onChange={handleTemperamentChange}>
-                            {temperaments.map((temperament) => (
-                                <option key={temperament.id} value={temperament.id}>
-                                    {temperament.name}
+                            {temperaments.map((t) => (
+                                <option key={t.id} value={t.name}>
+                                    {t.name}
                                 </option>
                             ))}
                         </select>
                         <div className={style['selected-values']}>
                             {formData.temperament.map((selectedValue) => {
-                                const selectedTemperament = temperaments.find((temperament) => temperament.id === selectedValue);
+                                const selectedTemperament = temperaments.find((t) => t.id === selectedValue);
                                 return (
-                                    <div key={selectedValue} className={style['selected-temperament']}>
+                                    <div key={selectedTemperament} className={style['selected-temperament']}>
                                         {selectedTemperament}{' '}
                                         <button type="button" onClick={() => handleRemoveTemperament(selectedValue)}>
                                             ✖

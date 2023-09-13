@@ -33,7 +33,7 @@ const Detail = () => {
                     <h3>Height: {dog.height} cm</h3>
                     <h3>Weight: {dog.weight} kg</h3>
                     <h3>Temperaments: {dog.temperament}</h3>
-                    <h3>Life span: {dog.life_span}</h3>
+                    <h3>Life Span: {dog.lifeSpan}</h3>
                 </div>
             </div>
         </div>
