@@ -17,6 +17,12 @@ function Paginator({ currentPage, totalPages, setPage }) {
             <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
                 Next
             </button>
+            <button onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
+                First
+            </button>
+            <button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}>
+                Last
+            </button>
         </div>
     );
 };

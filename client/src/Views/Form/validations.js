@@ -1,4 +1,4 @@
-const regImage = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*\.(jpg|jpeg|png|gif)$/i;
+const regImage = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*\./;
 const regName = /^[a-zA-Z\s]+$/;
 const regNumber = /^(?:[1-9][0-9]?|100)$/;
 
